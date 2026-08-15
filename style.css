@@ -120,16 +120,17 @@ body {
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--peach), var(--purple));
-    color: white;
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--peach);
     font-family: 'Kalnia', serif;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 1.1rem;
     border: none;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
