@@ -405,6 +405,7 @@ body {
 
 .swipe-area {
     flex: 1;
+    min-height: 0;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -412,6 +413,7 @@ body {
 
 .card-stack-container {
     flex: 1;
+    min-height: 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -443,12 +445,15 @@ body {
     border-radius: 18px;
     overflow: hidden;
     line-height: 0;
+    background: #111;
 }
 
 #card-img {
     width: 100%;
     height: auto;
-    max-height: calc(100vh - 220px);
+    /* 100svh = actual visible height with Safari address bar present.
+       Subtract header, safe areas, thumb strip (84), actions (96), card padding (32). */
+    max-height: calc(100svh - var(--header-h) - var(--safe-top) - var(--safe-bottom) - 212px);
     object-fit: contain;
     pointer-events: none;
     display: block;
