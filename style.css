@@ -672,6 +672,47 @@ body {
     margin-top: 2px;
 }
 
+.cat-filter-strip {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 10px 16px;
+    scrollbar-width: none;
+    flex-shrink: 0;
+    -webkit-overflow-scrolling: touch;
+}
+
+.cat-filter-strip::-webkit-scrollbar {
+    display: none;
+}
+
+.cat-filter-pill {
+    flex-shrink: 0;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1.5px solid rgba(224, 157, 112, 0.3);
+    background: white;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 400;
+    color: var(--muted);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.cat-filter-pill.active {
+    background: var(--peach);
+    border-color: var(--peach);
+    color: white;
+}
+
+.cat-filter-pill .pill-count {
+    font-weight: 500;
+    opacity: 0.85;
+}
+
 .review-tabs {
     display: flex;
     gap: 0;

@@ -496,25 +496,32 @@ $('btn-reject').addEventListener('click', () => commitSwipe(false));
 })();
 
 // ── Review ────────────────────────────────────────────────────────────────────
+let reviewAllPhotos = [];   // full unfiltered list for current tab
+let reviewSummary = null;   // summary with per-category counts
+let reviewCurrentTab = 'both';
+let reviewCatFilter = null; // null = show all
+
 async function initReview() {
     showView('view-review');
+    reviewCatFilter = null;
+    reviewCurrentTab = 'both';
 
-    // Load summary
     try {
-        const s = await apiGet('api/summary');
-        setText('stat-both', s.both_yes);
-        setText('stat-m', s.martijn_only_yes);
-        setText('stat-r', s.rosalie_only_yes);
+        reviewSummary = await apiGet('api/summary');
+        setText('stat-both', reviewSummary.both_yes);
+        setText('stat-m', reviewSummary.martijn_only_yes);
+        setText('stat-r', reviewSummary.rosalie_only_yes);
     } catch (e) {
         console.error(e);
     }
 
-    // Activate "both" tab by default
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === 'both'));
-    loadReviewTab('both');
+    await loadReviewTab('both');
 }
 
 async function loadReviewTab(tab) {
+    reviewCurrentTab = tab;
+    reviewCatFilter = null;
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
 
     const grid = $('review-grid');
@@ -522,15 +529,57 @@ async function loadReviewTab(tab) {
 
     try {
         const endpoint = tab === 'both' ? 'api/review/both' : 'api/review/discuss';
-        const photos = await apiGet(endpoint);
-        renderReviewGrid(photos, tab);
+        reviewAllPhotos = await apiGet(endpoint);
+        buildCatFilterStrip();
+        renderReviewGrid();
     } catch (e) {
         grid.innerHTML = '<div class="error">Kon foto\'s niet laden.</div>';
         console.error(e);
     }
 }
 
-function renderReviewGrid(photos, tab) {
+function buildCatFilterStrip() {
+    const strip = $('cat-filter-strip');
+    strip.innerHTML = '';
+
+    // Count per category in the current result set
+    const counts = {};
+    reviewAllPhotos.forEach(p => { counts[p.category] = (counts[p.category] || 0) + 1; });
+
+    // "Alle" pill
+    const allPill = document.createElement('button');
+    allPill.className = 'cat-filter-pill active';
+    allPill.innerHTML = `Alle <span class="pill-count">${reviewAllPhotos.length}</span>`;
+    allPill.addEventListener('click', () => { reviewCatFilter = null; updateCatFilter(); });
+    strip.appendChild(allPill);
+
+    // One pill per category that has photos in this tab
+    Object.keys(counts).forEach(folder => {
+        const pill = document.createElement('button');
+        pill.className = 'cat-filter-pill';
+        pill.dataset.cat = folder;
+        pill.innerHTML = `${catName(folder)} <span class="pill-count">${counts[folder]}</span>`;
+        pill.addEventListener('click', () => { reviewCatFilter = folder; updateCatFilter(); });
+        strip.appendChild(pill);
+    });
+}
+
+function updateCatFilter() {
+    $('cat-filter-strip').querySelectorAll('.cat-filter-pill').forEach(pill => {
+        const isAll = !pill.dataset.cat;
+        pill.classList.toggle('active',
+            reviewCatFilter === null ? isAll : pill.dataset.cat === reviewCatFilter
+        );
+    });
+    renderReviewGrid();
+}
+
+function renderReviewGrid() {
+    const tab = reviewCurrentTab;
+    const photos = reviewCatFilter
+        ? reviewAllPhotos.filter(p => p.category === reviewCatFilter)
+        : reviewAllPhotos;
+
     const grid = $('review-grid');
 
     if (photos.length === 0) {
@@ -544,7 +593,7 @@ function renderReviewGrid(photos, tab) {
     let lastCat = null;
 
     photos.forEach(photo => {
-        if (photo.category !== lastCat) {
+        if (!reviewCatFilter && photo.category !== lastCat) {
             const h = document.createElement('div');
             h.className = 'grid-category-header';
             h.textContent = catName(photo.category);
@@ -567,6 +616,7 @@ function renderReviewGrid(photos, tab) {
 document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', () => loadReviewTab(btn.dataset.tab));
 });
+
 
 // ── Zoom Modal ────────────────────────────────────────────────────────────────
 function openZoom(url) {

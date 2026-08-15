@@ -262,7 +262,23 @@ def get_summary():
                     WHERE s.user='rosalie' AND s.choice=1 AND p.category=?
                 )
             """, (cat, cat)).fetchone()[0]
-            categories.append({"name": cat, "total": cat_total, "both_yes": cat_both})
+            cat_discuss = conn.execute("""
+                SELECT COUNT(*) FROM (
+                    SELECT p.id,
+                        MAX(CASE WHEN s.user='martijn' AND s.choice=1 THEN 1 ELSE 0 END) as m_yes,
+                        MAX(CASE WHEN s.user='rosalie' AND s.choice=1 THEN 1 ELSE 0 END) as r_yes
+                    FROM photos p JOIN selections s ON s.photo_id = p.id
+                    WHERE p.category = ?
+                    GROUP BY p.id
+                    HAVING (m_yes + r_yes) = 1
+                )
+            """, (cat,)).fetchone()[0]
+            categories.append({
+                "name": cat,
+                "total": cat_total,
+                "both_yes": cat_both,
+                "discuss": cat_discuss,
+            })
 
         return {
             "total_photos": total,
