@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kalnia:wght@400;600;700&family=Josefin+Sans:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=3">
+    <link rel="stylesheet" href="style.css?v=4">
 </head>
 <body>
 
@@ -57,7 +57,9 @@
         <div class="swipe-area">
             <div class="card-stack-container">
                 <div id="photo-card" class="photo-card hidden">
-                    <img id="card-img" alt="Foto" draggable="false">
+                    <div class="photo-img-clip">
+                        <img id="card-img" alt="Foto" draggable="false">
+                    </div>
                     <div id="card-decision" class="card-decision hidden"></div>
                     <div class="swipe-hint hint-keep" id="hint-keep"><span>BEWAAR</span></div>
                     <div class="swipe-hint hint-skip" id="hint-skip"><span>SKIP</span></div>

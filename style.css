@@ -431,12 +431,17 @@ body {
     user-select: none;
     -webkit-user-select: none;
     cursor: grab;
-    /* will-change:transform breaks overflow:hidden in Safari iOS — omit it */
-    -webkit-mask-image: -webkit-radial-gradient(white, black);
+    will-change: transform;
 }
 
 .photo-card:active {
     cursor: grabbing;
+}
+
+.photo-img-clip {
+    border-radius: 18px;
+    overflow: hidden;
+    line-height: 0;
 }
 
 #card-img {
@@ -446,7 +451,6 @@ body {
     object-fit: contain;
     pointer-events: none;
     display: block;
-    border-radius: 18px;
 }
 
 .card-decision {
