@@ -77,7 +77,9 @@ function updateHeader(view) {
         setText('header-title', 'Selectie');
     }
 
-    $('btn-user').textContent = state.user ? state.user[0].toUpperCase() : '?';
+    const btn = $('btn-user');
+    btn.textContent = state.user ? state.user[0].toUpperCase() : '?';
+    btn.className = `header-btn user-btn-${state.user || ''}`;
 }
 
 // ── View Management ───────────────────────────────────────────────────────────

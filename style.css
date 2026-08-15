@@ -120,19 +120,21 @@ body {
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.95);
-    color: var(--peach);
-    font-family: 'Kalnia', serif;
-    font-weight: 600;
-    font-size: 1.1rem;
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: white;
     border: none;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s;
 }
+
+.user-btn-martijn { background: var(--peach); }
+.user-btn-rosalie { background: var(--purple); }
 
 #btn-user:active {
     transform: scale(0.95);
