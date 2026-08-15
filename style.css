@@ -431,7 +431,8 @@ body {
     user-select: none;
     -webkit-user-select: none;
     cursor: grab;
-    will-change: transform;
+    /* will-change:transform breaks overflow:hidden in Safari iOS — omit it */
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
 }
 
 .photo-card:active {

@@ -97,12 +97,12 @@ async def root():
 
 @app.get("/style.css")
 async def stylesheet():
-    return FileResponse(str(BASE_DIR / "style.css"))
+    return FileResponse(str(BASE_DIR / "style.css"), headers={"Cache-Control": "no-cache"})
 
 
 @app.get("/app.js")
 async def javascript():
-    return FileResponse(str(BASE_DIR / "app.js"))
+    return FileResponse(str(BASE_DIR / "app.js"), headers={"Cache-Control": "no-cache"})
 
 
 # ── API ────────────────────────────────────────────────────────────────────
