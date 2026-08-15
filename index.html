@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>Trouwfoto's</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kalnia:wght@400;600;700&family=Josefin+Sans:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <!-- ── Persistent Header ──────────────────────────────────────────────── -->
+    <header id="app-header" class="hidden">
+        <button id="btn-back" class="header-btn hidden" aria-label="Terug">‹</button>
+        <div id="header-title"></div>
+        <div class="header-right">
+            <span id="header-progress" class="hidden"></span>
+            <button id="btn-user" class="header-btn" aria-label="Gebruiker wisselen"></button>
+        </div>
+    </header>
+
+    <!-- ── Landing ───────────────────────────────────────────────────────── -->
+    <section id="view-landing">
+        <div class="landing-bg">
+            <div class="landing-content">
+                <h1 class="landing-title">Trouwfoto's</h1>
+                <p class="landing-subtitle">Wie ben jij?</p>
+                <div class="user-cards">
+                    <button class="user-card" data-user="martijn">
+                        <div class="user-initial">M</div>
+                        <div class="user-name">Martijn</div>
+                    </button>
+                    <button class="user-card" data-user="rosalie">
+                        <div class="user-initial">R</div>
+                        <div class="user-name">Rosalie</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Overview ──────────────────────────────────────────────────────── -->
+    <section id="view-overview" class="view hidden">
+        <div id="category-list"></div>
+        <div class="overview-footer">
+            <button id="btn-review">Bekijk selectie</button>
+        </div>
+    </section>
+
+    <!-- ── Swipe ─────────────────────────────────────────────────────────── -->
+    <section id="view-swipe" class="view hidden">
+        <div class="swipe-area">
+            <div class="card-stack-container">
+                <div id="photo-card" class="photo-card hidden">
+                    <img id="card-img" alt="Foto" draggable="false">
+                    <div class="swipe-hint hint-keep" id="hint-keep"><span>BEWAAR</span></div>
+                    <div class="swipe-hint hint-skip" id="hint-skip"><span>SKIP</span></div>
+                </div>
+                <div id="card-empty" class="card-empty hidden">
+                    <div class="empty-icon">🎉</div>
+                    <p>Alle foto's bekeken!</p>
+                </div>
+                <div id="card-loading" class="card-empty">
+                    <p>Laden…</p>
+                </div>
+            </div>
+            <div class="thumb-strip-wrapper">
+                <div class="thumb-strip" id="thumb-strip"></div>
+            </div>
+            <div class="swipe-actions">
+                <button id="btn-reject" class="action-btn" aria-label="Verwijder">✕</button>
+                <button id="btn-keep"   class="action-btn" aria-label="Bewaar">✓</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Review ────────────────────────────────────────────────────────── -->
+    <section id="view-review" class="view hidden">
+        <div class="review-stats">
+            <div class="stat-card stat-both">
+                <div class="stat-value" id="stat-both">–</div>
+                <div class="stat-label">Beide ✓</div>
+                <div class="stat-target">/ ~80</div>
+            </div>
+            <div class="stat-card stat-m">
+                <div class="stat-value" id="stat-m">–</div>
+                <div class="stat-label">Alleen Martijn</div>
+            </div>
+            <div class="stat-card stat-r">
+                <div class="stat-value" id="stat-r">–</div>
+                <div class="stat-label">Alleen Rosalie</div>
+            </div>
+        </div>
+        <div class="review-tabs">
+            <button class="tab-btn active" data-tab="both">Beide geselecteerd</button>
+            <button class="tab-btn" data-tab="discuss">Bespreek</button>
+        </div>
+        <div class="review-scroll">
+            <div id="review-grid" class="photo-grid"></div>
+        </div>
+    </section>
+
+    <!-- ── Zoom Modal ────────────────────────────────────────────────────── -->
+    <div id="zoom-modal" class="hidden" role="dialog" aria-modal="true" aria-label="Foto vergroten">
+        <button id="btn-zoom-close" aria-label="Sluiten">✕</button>
+        <div class="zoom-img-container">
+            <img id="zoom-img" alt="Originele foto">
+        </div>
+    </div>
+
+    <!-- ── User Switch Sheet ─────────────────────────────────────────────── -->
+    <div id="user-sheet" class="hidden" role="dialog" aria-modal="true">
+        <div class="sheet-backdrop" id="sheet-backdrop"></div>
+        <div class="sheet-content">
+            <div class="sheet-title">Gebruiker wisselen</div>
+            <div class="sheet-options">
+                <button class="sheet-user-btn" data-user="martijn">
+                    <div class="sheet-initial">M</div>
+                    <div class="sheet-name">Martijn</div>
+                </button>
+                <button class="sheet-user-btn" data-user="rosalie">
+                    <div class="sheet-initial">R</div>
+                    <div class="sheet-name">Rosalie</div>
+                </button>
+            </div>
+            <button class="sheet-cancel" id="sheet-cancel">Annuleer</button>
+        </div>
+    </div>
+
+    <script src="/app.js"></script>
+</body>
+</html>

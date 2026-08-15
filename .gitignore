@@ -1,0 +1,8 @@
+venv/
+__pycache__/
+*.pyc
+*.pyo
+photos.db
+thumbnails/
+import/
+start.command
