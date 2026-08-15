@@ -137,7 +137,7 @@ async function initOverview() {
     list.innerHTML = '<div class="loading">Laden…</div>';
 
     try {
-        const cats = await apiGet(`/api/categories?user=${state.user}`);
+        const cats = await apiGet(`api/categories?user=${state.user}`);
         renderCategoryList(cats);
     } catch (e) {
         list.innerHTML = '<div class="error">Kon categorieën niet laden.</div>';
@@ -211,8 +211,8 @@ async function initSwipe(category) {
 
     try {
         const [photos, allSels] = await Promise.all([
-            apiGet(`/api/photos?category=${encodeURIComponent(category)}`),
-            apiGet(`/api/selections?user=${state.user}`),
+            apiGet(`api/photos?category=${encodeURIComponent(category)}`),
+            apiGet(`api/selections?user=${state.user}`),
         ]);
 
         state.allPhotos = photos;
@@ -358,7 +358,7 @@ async function commitSwipe(choice) {
     updateProgress();
 
     // Fire API in background
-    apiPost('/api/selections', { photo_id: photo.id, user: state.user, choice }).catch(console.error);
+    apiPost('api/selections', { photo_id: photo.id, user: state.user, choice }).catch(console.error);
 
     // Animate card out
     const card = $('photo-card');
@@ -499,7 +499,7 @@ async function initReview() {
 
     // Load summary
     try {
-        const s = await apiGet('/api/summary');
+        const s = await apiGet('api/summary');
         setText('stat-both', s.both_yes);
         setText('stat-m', s.martijn_only_yes);
         setText('stat-r', s.rosalie_only_yes);
@@ -519,7 +519,7 @@ async function loadReviewTab(tab) {
     grid.innerHTML = '<div class="loading">Laden…</div>';
 
     try {
-        const endpoint = tab === 'both' ? '/api/review/both' : '/api/review/discuss';
+        const endpoint = tab === 'both' ? 'api/review/both' : 'api/review/discuss';
         const photos = await apiGet(endpoint);
         renderReviewGrid(photos, tab);
     } catch (e) {

@@ -63,8 +63,8 @@ def init_db():
 
 def photo_urls(row):
     return {
-        "thumbnail_url": "/thumbnails/" + urllib.parse.quote(row["thumbnail_path"], safe="/"),
-        "original_url": "/originals/" + urllib.parse.quote(row["original_path"], safe="/"),
+        "thumbnail_url": "thumbnails/" + urllib.parse.quote(row["thumbnail_path"], safe="/"),
+        "original_url": "originals/" + urllib.parse.quote(row["original_path"], safe="/"),
     }
 
 
