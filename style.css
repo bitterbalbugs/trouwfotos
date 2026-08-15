@@ -301,6 +301,24 @@ body {
     font-weight: 300;
     color: var(--muted);
     letter-spacing: 0.3px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.cat-kept {
+    color: #3cb464;
+    font-weight: 400;
+}
+
+.cat-rejected {
+    color: #dc3c3c;
+    font-weight: 400;
+}
+
+.cat-remaining {
+    color: var(--muted);
 }
 
 .cat-arrow {

@@ -159,11 +159,13 @@ function renderCategoryList(cats) {
         card.innerHTML = `
             <div class="cat-info">
                 <div class="cat-name">${catName(cat.name)}</div>
-                <div class="cat-count">${
-                    noPhotos ? 'Geen foto\'s' :
-                    done ? 'Klaar' :
-                    `${cat.remaining} resterend`
-                } · ${cat.total} totaal</div>
+                <div class="cat-count">
+                    ${noPhotos ? 'Geen foto\'s' : `
+                        <span class="cat-kept">✓ ${cat.kept}</span>
+                        <span class="cat-rejected">✕ ${cat.rejected}</span>
+                        ${cat.remaining > 0 ? `<span class="cat-remaining">· ${cat.remaining} over</span>` : ''}
+                    `}
+                </div>
             </div>
             ${done
                 ? '<div class="cat-done-icon">✓</div>'

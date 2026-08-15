@@ -117,15 +117,23 @@ def get_categories(user: str = Query(...)):
             total = conn.execute(
                 "SELECT COUNT(*) FROM photos WHERE category = ?", (cat,)
             ).fetchone()[0]
-            swiped = conn.execute("""
-                SELECT COUNT(*) FROM selections s
+            row = conn.execute("""
+                SELECT
+                    SUM(CASE WHEN s.choice = 1 THEN 1 ELSE 0 END),
+                    SUM(CASE WHEN s.choice = 0 THEN 1 ELSE 0 END)
+                FROM selections s
                 JOIN photos p ON s.photo_id = p.id
                 WHERE p.category = ? AND s.user = ?
-            """, (cat, user)).fetchone()[0]
+            """, (cat, user)).fetchone()
+            kept     = row[0] or 0
+            rejected = row[1] or 0
+            swiped   = kept + rejected
             result.append({
                 "name": cat,
                 "total": total,
                 "swiped": swiped,
+                "kept": kept,
+                "rejected": rejected,
                 "remaining": total - swiped,
             })
         return result
