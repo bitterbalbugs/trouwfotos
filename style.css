@@ -423,7 +423,7 @@ body {
 }
 
 .photo-card {
-    width: 100%;
+    width: fit-content;
     max-width: 360px;
     border-radius: 18px;
     overflow: hidden;
@@ -445,18 +445,18 @@ body {
     border-radius: 18px;
     overflow: hidden;
     line-height: 0;
-    background: #111;
+    width: fit-content;
 }
 
 #card-img {
-    width: 100%;
-    height: auto;
-    /* 100svh = actual visible height with Safari address bar present.
-       Subtract header, safe areas, thumb strip (84), actions (96), card padding (32). */
-    max-height: calc(100svh - var(--header-h) - var(--safe-top) - var(--safe-bottom) - 212px);
-    object-fit: contain;
-    pointer-events: none;
     display: block;
+    width: auto;
+    max-width: 360px;
+    height: auto;
+    /* 100svh = visible height with Safari address bar present.
+       Subtract header, safe areas, thumb (84) + actions (96) + card padding (32) = 212px. */
+    max-height: calc(100svh - var(--header-h) - var(--safe-top) - var(--safe-bottom) - 212px);
+    pointer-events: none;
 }
 
 .card-decision {
