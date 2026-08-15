@@ -102,6 +102,7 @@ function selectUser(user) {
     state.user = user;
     localStorage.setItem('user', user);
     window.location.hash = '#overview';
+    route();
 }
 
 // ── User Switch Sheet ─────────────────────────────────────────────────────────
