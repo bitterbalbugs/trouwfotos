@@ -425,8 +425,9 @@ body {
     max-width: 360px;
     border-radius: 18px;
     overflow: hidden;
+    clip-path: inset(0 round 18px);
     position: relative;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.18);
+    filter: drop-shadow(0 10px 40px rgba(0, 0, 0, 0.18));
     touch-action: none;
     user-select: none;
     -webkit-user-select: none;
