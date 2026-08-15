@@ -301,6 +301,16 @@ function showPhoto(index, scrollSmooth = true) {
     img.src = photo.thumbnail_url;
     img.dataset.originalUrl = photo.original_url;
 
+    // Update decision badge
+    const badge = $('card-decision');
+    if (photo.id in state.selections) {
+        const choice = state.selections[photo.id];
+        badge.textContent = choice ? '✓' : '✕';
+        badge.className = `card-decision ${choice ? 'card-decision-keep' : 'card-decision-reject'}`;
+    } else {
+        badge.className = 'card-decision hidden';
+    }
+
     show('photo-card');
     hide('card-empty');
 
@@ -371,7 +381,7 @@ async function commitSwipe(choice) {
     card.style.transform = `translateX(${dir * 110}%) rotate(${dir * 16}deg)`;
     card.style.opacity = '0';
 
-    const nextIndex = findNextUndecided(prevIndex);
+    const nextIndex = prevIndex + 1 < state.allPhotos.length ? prevIndex + 1 : -1;
 
     setTimeout(() => {
         card.style.transition = '';
@@ -384,8 +394,8 @@ async function commitSwipe(choice) {
         if (nextIndex !== -1) {
             showPhoto(nextIndex);
         } else {
-            // All decided — stay on current photo, let user browse via strip
-            showPhoto(prevIndex);
+            show('card-empty');
+            hide('photo-card');
         }
     }, 270);
 }

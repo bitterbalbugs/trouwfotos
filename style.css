@@ -445,7 +445,29 @@ body {
     object-fit: contain;
     pointer-events: none;
     display: block;
+    border-radius: 18px;
 }
+
+.card-decision {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+    pointer-events: none;
+    z-index: 5;
+}
+.card-decision.hidden { display: none; }
+.card-decision-keep { background: rgba(40, 180, 80, 0.92); }
+.card-decision-reject { background: rgba(210, 55, 55, 0.92); }
 
 .swipe-hint {
     position: absolute;
