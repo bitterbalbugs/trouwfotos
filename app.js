@@ -303,8 +303,9 @@ function showPhoto(index, scrollSmooth = true) {
     show('photo-card');
     hide('card-empty');
 
-    updateActiveThumb(state.currentIndex, index);
+    const prevIndex = state.currentIndex;
     state.currentIndex = index;
+    updateActiveThumb(prevIndex, index);
     scrollThumbTo(index, scrollSmooth);
     updateProgress();
 
